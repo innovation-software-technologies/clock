@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>World Clock</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+    }
+    .clock {
+      background: #1e293b;
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .clock h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.2rem;
+    }
+    .clock p {
+      font-size: 1.5rem;
+      margin: 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Add more clocks here -->
+  <div class="clock" data-offset="-7"><h2>Seatle (GMT-5)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="-6"><h2>Salt Lake City (GMT-5)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="-5"><h2>Chicago (GMT-4)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="-4"><h2>New York (GMT-5)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="1"><h2>London (GMT+0)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="6.5"><h2>India (GMT+5:30)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="10"><h2>Tokyo (GMT+9)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="15"><h2>Kiritimati (GMT+14)</h2><p>Loading…</p></div>
+  <div class="clock" data-offset="-11"><h2>Baker Island (GMT−12)</h2><p>Loading…</p></div>
 
+  <script>
+function updateClocks() {
+  const clocks = document.querySelectorAll('.clock');
+  const now = new Date();
+
+  clocks.forEach(clock => {
+    const offset = parseFloat(clock.dataset.offset);
+    const localTime = new Date(now.getTime() + offset * 3600 * 1000);
+
+    let hours = localTime.getUTCHours();
+    const minutes = localTime.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = localTime.getUTCSeconds().toString().padStart(2, '0');
+
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // convert to 12-hour format
+
+    clock.querySelector('p').textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+  });
+}
+
+    setInterval(updateClocks, 1000);
+    updateClocks();
+  </script>
+</body>
+</html>
